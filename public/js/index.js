@@ -7,12 +7,12 @@ async function sendInput() {
     const data = await fetch('/process', {
       method: 'post',
       headers: {
-        'Content-Type':'text/html'
+        'Content-Type':'application/json'
       },
       body: JSON.stringify({input: input})
     });
 
     const results = await data.json();
-    output.innerHTML = results.output;
-  } catch (e) {console.log(e);}
+    output.innerHTML = JSON.stringify(results.output, null, 2);
+  } catch (e) {console.error(e); output.innerHTML = "<h1>Error in Input!</h1>"}
 }
