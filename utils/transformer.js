@@ -6,15 +6,17 @@ module.exports = function transformer(AST) {
     body: []
   };
 
+  let pos = tAST.body;
+
   traverse(AST, {
     NumberLiteral(node) {
-      position.push({
+      pos.push({
         type: 'NumericLiteral',
         value: node.value
       });
     },
-    CallExpression(node) {
-      const expression = {
+    CallExpression(node, parent) {
+      let expression = {
         type: 'CallExpression',
         callee: {
           type: 'Identifier',
@@ -22,8 +24,8 @@ module.exports = function transformer(AST) {
         },
         arguments: []
       };
-      const prevPosition = position;
-      position = expression.arguments;
+      const prevPosition = pos;
+      pos = expression.arguments;
       if(parent.type !== 'CallExpression') {
         expression = {
           type: 'ExpressionStatement',

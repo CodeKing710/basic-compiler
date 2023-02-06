@@ -13,6 +13,6 @@ async function sendInput() {
     });
 
     const results = await data.json();
-    output.innerHTML = JSON.stringify(results.output, null, 2);
+    output.innerHTML = eval(results.output);
   } catch (e) {console.error(e); output.innerHTML = "<h1>Error in Input!</h1>"}
 }
